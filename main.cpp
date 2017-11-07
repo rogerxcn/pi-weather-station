@@ -8,14 +8,15 @@
 RawSerial s(USBTX, USBRX);   // Raspberry Pi is connected using USB serial
 
 // Global variables
-SerialState s_state = RESET;
-SerialCommand s_cmd = INVALID;
+SerialState s_state = RESET;        // Serial state
+SerialCommand s_cmd = INVALID;      // Last valid serial command
 
 
 // Interrupt routine for active serial transactions
 void s_recv() {
+    // Command buffer
     char command_char = 0;
-
+    // State transition
     switch (s_state) {
         case RESET:
             if (s.getc() == '!') s_state = EXCLAMATION_RECV;
@@ -42,8 +43,11 @@ void s_recv() {
 }
 
 int main() {
+    // Set baud rate
     pi.baud(9600);
+    // Attach interrupt
     pi.attach(&s_recv, Serial::RxIrq);
+    // Go to sleep zzZ
     while(1) {
         sleep();
     }
