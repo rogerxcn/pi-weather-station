@@ -29,7 +29,10 @@ void s_recv() {
                 s_cmd = ACK;
             } else if (command_char == 'n') {
                 s_cmd = nACK;
-            } else {
+            } else if (command_char == 't') {
+                s_cmd = TEST;
+                printf("!t PRES 1017 HUM 43.6 TEMP 78.2 WIND 3.2 NE");  // test data
+            }else {
                 s_cmd = INVALID;
             }
             s_state = RESET;
@@ -44,9 +47,9 @@ void s_recv() {
 
 int main() {
     // Set baud rate
-    pi.baud(9600);
+    s.baud(9600);
     // Attach interrupt
-    pi.attach(&s_recv, Serial::RxIrq);
+    s.attach(&s_recv, Serial::RxIrq);
     // Go to sleep zzZ
     while(1) {
         sleep();

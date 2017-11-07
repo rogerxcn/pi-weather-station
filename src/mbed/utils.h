@@ -16,6 +16,7 @@ typedef enum SerialCommand {
     INVALID = 0,
     ACK,
     nACK,
+    TEST,
 } SerialCommand;
 
 #endif
