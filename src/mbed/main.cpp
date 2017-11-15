@@ -11,6 +11,12 @@ RawSerial s(USBTX, USBRX);   // Raspberry Pi is connected using USB serial
 SerialState s_state = RESET;        // Serial state
 SerialCommand s_cmd = INVALID;      // Last valid serial command
 
+//Sensor data
+volatile float pressure = 0;
+volatile float humidity = 0;
+volatile float temperature = 0;
+volatile float wind_speed = 0;
+volatile char wind_dir[2];
 
 // Interrupt routine for active serial transactions
 void s_recv() {
@@ -25,13 +31,16 @@ void s_recv() {
 
         case EXCLAMATION_RECV:
             command_char = s.getc();
-            if (command_char == 'A') {
+            if (command_char == '1') {
+                s_cmd = GET_DATA;
+                printf("!t PRES %.2f HUM %.2f TEMP %.2f WIND %.2f %s\r\n", pressure, humidity, temperature, wind_speed, wind_dir);
+            } else if (command_char == 'A') {
                 s_cmd = ACK;
-            } else if (command_char == 'n') {
+            } else if (command_char == 'N') {
                 s_cmd = nACK;
             } else if (command_char == 't') {
                 s_cmd = TEST;
-                printf("!t PRES 1017 HUM 43.6 TEMP 78.2 WIND 3.2 NE");  // test data
+                printf("!t PRES 1017 HUM 43.6 TEMP 78.2 WIND 3.2 NE\r\n");  // test data
             }else {
                 s_cmd = INVALID;
             }

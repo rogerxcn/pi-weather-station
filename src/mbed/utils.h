@@ -17,6 +17,7 @@ typedef enum SerialCommand {
     ACK,
     nACK,
     TEST,
+    GET_DATA,
 } SerialCommand;
 
 #endif
