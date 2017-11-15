@@ -2,6 +2,7 @@
 
 // Include statements
 #include "mbed.h"
+#include "rtos.h"
 #include "utils.h"
 
 // I/O declarations
@@ -54,7 +55,17 @@ void s_recv() {
 
 }
 
+void update_weather_station_data() {
+    //TODO: add routines here
+
+
+
+}
+
 int main() {
+    // Initialize thread instance
+    Thread t1;
+    t1.start(update_weather_station_data);
     // Set baud rate
     s.baud(9600);
     // Attach interrupt
