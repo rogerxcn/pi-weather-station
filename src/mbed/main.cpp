@@ -34,14 +34,14 @@ void s_recv() {
             command_char = s.getc();
             if (command_char == '1') {
                 s_cmd = GET_DATA;
-                printf("!t PRES %.2f HUM %.2f TEMP %.2f WIND %.2f %s\r\n", pressure, humidity, temperature, wind_speed, wind_dir);
+                s.printf("!t PRES %.2f HUM %.2f TEMP %.2f WIND %.2f %s\r\n", pressure, humidity, temperature, wind_speed, wind_dir);
             } else if (command_char == 'A') {
                 s_cmd = ACK;
             } else if (command_char == 'N') {
                 s_cmd = nACK;
             } else if (command_char == 't') {
                 s_cmd = TEST;
-                printf("!t PRES 1017 HUM 43.6 TEMP 78.2 WIND 3.2 NE\r\n");  // test data
+                s.printf("!t PRES 1017 HUM 43.6 TEMP 78.2 WIND 3.2 NE\r\n");  // test data
             }else {
                 s_cmd = INVALID;
             }
