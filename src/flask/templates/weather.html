@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Weather Station Live Report</title>
+        <script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+        <style>
+            .container {
+                border: 1px solid #000;
+                border-radius: 0px;
+                padding: 10px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <h3>Temperature: {{ html_temperature }} </h3>
+            <h3>Humidity: {{ html_humidity }} </h3>
+            <h3>Pressure: {{ html_pressure }} </h3>
+            <h3>Wind Speed: {{ html_windspeed }} </h3>
+            <h3>Wind Direction: {{ html_winddir }} </h3>
+        </div>
+    </body>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+        });
+    </script>
+</html>

@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <termios.h>
+#include <fstream>
 
 int main(int argc, char ** argv) {
 	int fd;
@@ -68,6 +69,7 @@ int main(int argc, char ** argv) {
 
     if (result < 0) {
         printf("sscanf: parse failed\n");
+		std::ofstream data("weather.data");
     } else {
         printf("data acquired:\n\
                 pressure: %.2f\n\
@@ -76,6 +78,14 @@ int main(int argc, char ** argv) {
                 wind: %.2f %s\n",
                 pressure, humidity, temperature, wind, wind_dir);
     }
+
+	std::ofstream data("weather.data");
+
+	data << pressure << std::endl;
+	data << humidity << std::endl;
+	data << temperature << std::endl;
+	data << wind << std::endl;
+	data << wind_dir << std::endl;
 
 	// Don't forget to clean up and close the port
 	tcdrain(fd);
