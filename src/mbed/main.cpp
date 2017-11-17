@@ -7,6 +7,8 @@
 
 // I/O declarations
 RawSerial s(USBTX, USBRX);   // Raspberry Pi is connected using USB serial
+WeatherMeters wm(p8, p15, p10, Weather_auto);/*Weather meter init*/
+SHTx::SHT15 sensor(p28, p27);  /*Temp & Humidity Init*/
 
 // Global variables
 SerialState s_state = RESET;        // Serial state
@@ -17,7 +19,9 @@ volatile float pressure = 0;
 volatile float humidity = 0;
 volatile float temperature = 0;
 volatile float wind_speed = 0;
-volatile char wind_dir[2];
+volatile float raingauge = 0;
+//volatile char wind_dir[2];
+volatile float wind_dir = 0;
 
 // Interrupt routine for active serial transactions
 void s_recv() {
@@ -56,10 +60,13 @@ void s_recv() {
 }
 
 void update_weather_station_data() {
-    //TODO: add routines here
-
-
-
+    /* Get weather readings from sensors*/
+    wind_speed = station.get_windspeed();
+    wind_dir = station.get_windvane();
+    raingauge = station.get_raingauge();
+    temperature = sensor.getTemperature();
+    humidity = sensor.getHumidity();
+    Thread::wait(1000);
 }
 
 int main() {
