@@ -7,8 +7,9 @@
 
 // I/O declarations
 RawSerial s(USBTX, USBRX);   // Raspberry Pi is connected using USB serial
-WeatherMeters wm(p8, p15, p10, Weather_auto);/*Weather meter init*/
+WeatherMeters wm(p8, p15, p12, Weather_auto);/*Weather meter init*/
 SHTx::SHT15 sensor(p28, p27);  /*Temp & Humidity Init*/
+BMP085 barometer(p9, p10);
 
 // Global variables
 SerialState s_state = RESET;        // Serial state
