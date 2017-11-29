@@ -1,5 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, Responce
 import json
+from camera import Camera
+
 
 app = Flask(__name__)
 temperature = 0
@@ -55,6 +57,17 @@ def index():
                             html_pressure=pressure,
                             html_windspeed=wind_speed,
                             html_winddir=wind_dir)
+
+def gen(camera):
+    while True:
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(gen(Camera()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
   app.run(debug=True, host='0.0.0.0')
