@@ -14,20 +14,30 @@
     </head>
 
     <body>
-        <div class="container">
-            <h3>Temperature: {{ html_temperature }} </h3>
-            <h3>Humidity: {{ html_humidity }} </h3>
-            <h3>Pressure: {{ html_pressure }} </h3>
-            <h3>Wind Speed: {{ html_windspeed }} </h3>
-            <h3>Wind Direction: {{ html_winddir }} </h3>
-        </div>
-    </body>
+      <table class="table table-striped">
+          <tr>
+              <th>Temperature</th>
+              <th>Humidity</th>
+              <th>Pressure</th>
+              <th>Wind Speed</th>
+              <th>Wind Direction</th>
+          </tr>
+
+      <tr>
+          <td>{{ html_temperature }}</td>
+          <td>{{ html_humidity }} </td>
+          <td>{{ html_pressure }}</td>
+          <td>{{ html_windspeed }}</td>
+          <td>{{ html_winddir }}</td>
+
+      </tr>
+
 
     <body>
         <h1>Video Streaming Demonstration</h1>
         <img src="{{ url_for('video_feed') }}">
     </body>
-    
+
     <script type="text/javascript">
         $(document).ready(function() {
 
