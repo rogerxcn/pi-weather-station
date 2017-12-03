@@ -1,7 +1,8 @@
-from flask import Flask, render_template, Responce
+from flask import Flask, render_template
 import json
-from camera import Camera
+import netifaces as ni
 
+ip = ni.ifaddresses('wlan0')[ni.AF_INET][0]['addr']
 
 app = Flask(__name__)
 temperature = 0
@@ -56,18 +57,8 @@ def index():
                             html_humidity=humidity,
                             html_pressure=pressure,
                             html_windspeed=wind_speed,
-                            html_winddir=wind_dir)
-
-def gen(camera):
-    while True:
-        frame = camera.get_frame()
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-
-@app.route('/video_feed')
-def video_feed():
-    return Response(gen(Camera()),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
+                            html_winddir=wind_dir,
+                            html_server_ip=ip)
 
 if __name__ == '__main__':
   app.run(debug=True, host='0.0.0.0')

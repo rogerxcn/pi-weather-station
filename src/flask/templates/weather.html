@@ -14,28 +14,26 @@
     </head>
 
     <body>
-      <table class="table table-striped">
-          <tr>
-              <th>Temperature</th>
-              <th>Humidity</th>
-              <th>Pressure</th>
-              <th>Wind Speed</th>
-              <th>Wind Direction</th>
-          </tr>
+        <table class="table table-striped">
+            <tr>
+                <th>Temperature</th>
+                <th>Humidity</th>
+                <th>Pressure</th>
+                <th>Wind Speed</th>
+                <th>Wind Direction</th>
+            </tr>
 
-      <tr>
-          <td>{{ html_temperature }}</td>
-          <td>{{ html_humidity }} </td>
-          <td>{{ html_pressure }}</td>
-          <td>{{ html_windspeed }}</td>
-          <td>{{ html_winddir }}</td>
+            <tr>
+                <td>{{ html_temperature }}</td>
+                <td>{{ html_humidity }} </td>
+                <td>{{ html_pressure }}</td>
+                <td>{{ html_windspeed }}</td>
+                <td>{{ html_winddir }}</td>
+            </tr>
+        </table>
 
-      </tr>
-
-
-    <body>
-        <h1>Video Streaming Demonstration</h1>
-        <img src="{{ url_for('video_feed') }}">
+        <h1>Live Stream</h1>
+        <iframe src="http://{{ html_server_ip }}/stream_simple.html" width="1000" height="1000" scrolling="yes" />
     </body>
 
     <script type="text/javascript">
