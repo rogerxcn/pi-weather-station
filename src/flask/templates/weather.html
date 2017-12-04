@@ -14,13 +14,14 @@
     </head>
 
     <body>
-        <table class="table table-striped">
+        <table class="container">
             <tr>
                 <th>Temperature</th>
                 <th>Humidity</th>
                 <th>Pressure</th>
                 <th>Wind Speed</th>
                 <th>Wind Direction</th>
+                <th>Rain Gauge Reading</th>
             </tr>
 
             <tr>
@@ -29,11 +30,12 @@
                 <td>{{ html_pressure }}</td>
                 <td>{{ html_windspeed }}</td>
                 <td>{{ html_winddir }}</td>
+                <td>{{ html_rain }}</td>
             </tr>
         </table>
 
         <h1>Live Stream</h1>
-        <iframe src="http://{{ html_server_ip }}/stream_simple.html" width="1000" height="1000" scrolling="yes" />
+        <iframe src="http://{{ html_server_ip }}/stream_simple.html" width="640" height="320" scrolling="no"/>
     </body>
 
     <script type="text/javascript">

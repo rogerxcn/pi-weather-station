@@ -19,7 +19,17 @@ temperature = 0
 humidity = 0
 pressure = 0
 wind_speed = 0
+rain_size = 0
 wind_dir = 'N/A'
+
+@app.route('/read')
+def read():
+    res = os.system(cmd)
+    time.sleep(1)
+    while (res == -1):
+        res = os.system(cmd)
+        time.sleep(1)
+    return "OK"
 
 @app.route('/getJSON')
 def get_JSON():
@@ -28,7 +38,8 @@ def get_JSON():
         'humidity'      : humidity,
         'pressure'      : pressure,
         'wind_speed'    : wind_speed,
-        'wind_dir'      : wind_dir
+        'wind_dir'      : wind_dir,
+        'rain_size'     : rain_size,
     }
     return json.dumps(data)
 
@@ -68,6 +79,7 @@ def index():
                             html_pressure=pressure,
                             html_windspeed=wind_speed,
                             html_winddir=wind_dir,
+                            html_rain=rain_size,
                             html_server_ip=ip)
 
 if __name__ == '__main__':

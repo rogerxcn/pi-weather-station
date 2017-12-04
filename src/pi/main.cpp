@@ -61,10 +61,11 @@ int main(int argc, char ** argv) {
     float  humidity;
     float  temperature;
     float  wind;
-    char    wind_dir[2];
+	float  rain_size;
+    char   wind_dir[2];
 
-    int result = sscanf(buf, "!t PRES %f HUM %f TEMP %f WIND %f %s",
-                        &pressure, &humidity, &temperature, &wind, wind_dir);
+    int result = sscanf(buf, "!t PRES %f HUM %f TEMP %f WIND %f %s RAIN %f",
+                        &pressure, &humidity, &temperature, &wind, wind_dir, &rain_size);
 
     if (buf[0] != '!') result = -1;
 
@@ -76,8 +77,9 @@ int main(int argc, char ** argv) {
                 pressure: %.2f\n\
                 humidity: %.2f\n\
                 temperature: %.2f\n\
-                wind: %.2f %s\n",
-                pressure, humidity, temperature, wind, wind_dir);
+                wind: %.2f %s\n\
+				rain: %.2f\n",
+                pressure, humidity, temperature, wind, wind_dir, rain_size);
     }
 
 	std::ofstream data("weather.data");
@@ -87,6 +89,7 @@ int main(int argc, char ** argv) {
 	data << temperature << std::endl;
 	data << wind << std::endl;
 	data << wind_dir << std::endl;
+	data << rain_size << std:endl;
 
 	// Don't forget to clean up and close the port
 	tcdrain(fd);
