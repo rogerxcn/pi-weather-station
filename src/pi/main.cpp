@@ -18,7 +18,7 @@ int main(int argc, char ** argv) {
 	//open mbed's USB virtual com port
 	if (fd == -1) {
 		perror("open_port: Unable to open /dev/ttyACM0 - ");
-		return(-1);
+		return -1;
 	}
 
 	// Turn off blocking for reads, use (fd, F_SETFL, FNDELAY) if you want that
@@ -36,6 +36,7 @@ int main(int argc, char ** argv) {
 	sleep(0.5);
 
 	// Write to the port
+	read(fd, buf, 256); // clear extra chars in the rx buffer
 	n = write(fd,"!t",2);
 	if (n < 0) {
 		perror("Write failed - ");
@@ -69,7 +70,7 @@ int main(int argc, char ** argv) {
 
     if (result < 0) {
         printf("sscanf: parse failed\n");
-		std::ofstream data("weather.data");
+		return -1;
     } else {
         printf("data acquired:\n\
                 pressure: %.2f\n\

@@ -1,8 +1,18 @@
+import json, time, os
 from flask import Flask, render_template
-import json
 import netifaces as ni
 
 ip = ni.ifaddresses('wlan0')[ni.AF_INET][0]['addr']
+cmd = '/home/pi/4180-proj/main.o'
+
+print("Testing MBED connectivity...")
+res = os.system(cmd)
+time.sleep(2)
+res = os.system(cmd)
+if (res == -1):
+    print("Test failed, program terminated.")
+    return
+print("Connectivity test passed.")
 
 app = Flask(__name__)
 temperature = 0
