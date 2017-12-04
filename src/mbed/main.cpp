@@ -5,13 +5,15 @@
 #include "rtos.h"
 #include "utils.h"
 #include "WeatherMeters.h"
+#include "SHTx/sht15.hpp"
+#include "SCP1000.h"
 
 
 // I/O declarations
 RawSerial s(USBTX, USBRX);   // Raspberry Pi is connected using USB serial
 WeatherMeters wm(p21, p15, p22, Weather_auto);/*Weather meter init*/
-//SHTx::SHT15 sensor(p28, p27);  /*Temp & Humidity Init*/
-//BMP085 bmp085(p9, p10);
+SHTx::SHT15 sensor(p9, p10);  /*Temp & Humidity Init*/
+SCP1000 scp1000(p5,p6,p7,p8);  /*Barometer Init*/
 
 // Global variables
 SerialState s_state = RESET;        // Serial state
@@ -68,13 +70,14 @@ void update_weather_station_data() {
                 wind_speed = wm.get_windspeed();
                 wind_d = wm.get_windvane();
                 raingauge = wm.get_raingauge();
-//   temperature = sensor.getTemperature();
-//   humidity = sensor.getHumidity();
-//    bmp085.update();
-//    pressure = bmp085.get_pressure();
-//temeperature = bmp085.get_temperature();
-/* Transfer from degree to char direction*/
-//s.printf("%.2f\n", wind_d );
+                sensor.update();
+                sensor.setScale(false);
+                temperature = sensor.getTemperature();
+                humidity = sensor.getHumidity();
+                pressure = scp1000.readPressure();
+
+                /* Transfer from degree to char direction*/
+                //s.printf("%.2f\n", wind_d );
                 if (wind_d<22.5) {
                         wind_dir[0] = 'N';
                         wind_dir[1] = ' ';
