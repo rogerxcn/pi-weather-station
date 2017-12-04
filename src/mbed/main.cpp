@@ -43,7 +43,7 @@ void s_recv() {
                 command_char = s.getc();
                 if (command_char == '1') {
                         s_cmd = GET_DATA;
-                        s.printf("!t PRES %.2f HUM %.2f TEMP %.2f WIND %.2f %s RAIN %0.2f\r\n", pressure, humidity, temperature, wind_speed, wind_dir, raingauge);
+                        s.printf("!t PRES %.2f HUM %.2f TEMP %.2f WIND %.2f %c%c RAIN %.2f\r\n", pressure, humidity, temperature, wind_speed, wind_dir[0], wind_dir[1], raingauge);
                 } else if (command_char == 'A') {
                         s_cmd = ACK;
                 } else if (command_char == 'N') {

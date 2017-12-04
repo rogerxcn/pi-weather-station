@@ -1,46 +1,121 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <title>Weather Station Live Report</title>
-        <script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
-        <style>
-            .container {
-                border: 1px solid #000;
-                border-radius: 0px;
-                padding: 10px;
-            }
-        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+        <script>
+            $(document).ready(function() {
+                $("#update-data").click(function(){
+                    $("#update-data").prop('disabled', true);
+                    $("#update-data").html('Sending Request..');
+                    var request = new XMLHttpRequest();
+                    request.open('GET', '/read', false);
+                    request.send(null);
+
+                    if (request.status === 200) {
+                        console.log(request.responseText);
+                        $("#update-data").html('Processing..');
+                    } else {
+                        $("#update-data").prop('disabled', false);
+                        $("#update-data").html('Try Again');
+                        return;
+                    }
+
+                    $.get("/getTemperature", function(result){
+                        $("#temperature").html(result);
+                    });
+
+                    $.get("/getPressure", function(result){
+                        $("#pressure").html(result);
+                    });
+
+                    $.get("/getHumidity", function(result){
+                        $("#humidity").html(result);
+                    });
+
+                    $.get("/getWindSpeed", function(result){
+                        $("#wind_speed").html(result);
+                    });
+
+                    $.get("/getWindDir", function(result){
+                        $("#wind_dir").html(result);
+                    });
+
+                    $.get("/getRain", function(result){
+                        $("#temperature").html(result);
+                    });
+
+                    $("#update-data").prop('disabled', false);
+                    $("#update-data").html('Update');
+                });
+
+            });
+        </script>
     </head>
 
     <body>
-        <table class="container">
-            <tr>
-                <th>Temperature</th>
-                <th>Humidity</th>
-                <th>Pressure</th>
-                <th>Wind Speed</th>
-                <th>Wind Direction</th>
-                <th>Rain Gauge Reading</th>
-            </tr>
+        <div class="container" style="padding: 20px;">
+            <h1>Live Data Report</h1>
+            <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Data Type</th>
+                        <th scope="col">Data Value</th>
+                    </tr>
+                </thead>
 
-            <tr>
-                <td>{{ html_temperature }}</td>
-                <td>{{ html_humidity }} </td>
-                <td>{{ html_pressure }}</td>
-                <td>{{ html_windspeed }}</td>
-                <td>{{ html_winddir }}</td>
-                <td>{{ html_rain }}</td>
-            </tr>
-        </table>
+                <tr>
+                    <th scope="col">1</th>
+                    <td>Temperature</td>
+                    <td id="temperature">{{ html_temperature }}</td>
+                </tr>
 
-        <h1>Live Stream</h1>
-        <iframe src="http://{{ html_server_ip }}/stream_simple.html" width="640" height="320" scrolling="no"/>
+                <tr>
+                    <th scope="col">2</th>
+                    <td>Humidity</td>
+                    <td id="humidity">{{ html_humidity }}</td>
+                </tr>
+
+                <tr>
+                    <th scope="col">3</th>
+                    <td>Pressure</td>
+                    <td id="pressure">{{ html_pressure }}</td>
+                </tr>
+
+                <tr>
+                    <th scope="col">4</th>
+                    <td>Pressure</td>
+                    <td id="wind_speed">{{ html_windspeed }}</td>
+                </tr>
+
+                <tr>
+                    <th scope="col">5</th>
+                    <td>Wind Direction</td>
+                    <td id="wind_dir">{{ html_winddir }}</td>
+                </tr>
+
+                <tr>
+                    <th scope="col">6</th>
+                    <td>Rain Gauge Reading</td>
+                    <td id="rain_size">{{ html_rain }}</td>
+                </tr>
+
+            </table>
+
+            <button role="button" class="btn btn-sm btn-outline-dark" id="update-data">Update data</button>
+        </div>
+
+        <div class="container" style="padding: 20px;">
+            <h1>Live Stream</h1>
+            <iframe src="http://{{ html_server_ip }}/stream_simple.html" width="640" height="320" frameBorder="0" scrolling="no"/>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
     </body>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-
-        });
-    </script>
 </html>
