@@ -37,7 +37,7 @@ int main(int argc, char ** argv) {
 
 	// Write to the port
 	read(fd, buf, 256); // clear extra chars in the rx buffer
-	n = write(fd,"!t",2);
+	n = write(fd,"!1",2);
 	if (n < 0) {
 		perror("Write failed - ");
 		return -1;
@@ -89,7 +89,7 @@ int main(int argc, char ** argv) {
 	data << temperature << std::endl;
 	data << wind << std::endl;
 	data << wind_dir << std::endl;
-	data << rain_size << std:endl;
+	data << rain_size << std::endl;
 
 	// Don't forget to clean up and close the port
 	tcdrain(fd);

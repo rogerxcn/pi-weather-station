@@ -1,2 +1,2 @@
 all: main.cpp
-	gcc -Wall -pthread -o main.o main.cpp -lpigpio -lrt
+	g++ -Wall -pthread -o main.o main.cpp -lpigpio -lrt
