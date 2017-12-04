@@ -3,15 +3,15 @@ from flask import Flask, render_template
 import netifaces as ni
 
 ip = ni.ifaddresses('wlan0')[ni.AF_INET][0]['addr']
-cmd = '/home/pi/4180-proj/main.o'
+cmd = '/home/pi/Documents/4180-proj/main.o'
 
 print("Testing MBED connectivity...")
 res = os.system(cmd)
-time.sleep(2)
-res = os.system(cmd)
-if (res == -1):
-    print("Test failed, program terminated.")
-    return
+time.sleep(1)
+while (res == -1):
+    print("Test failed, reconnecting...")
+    res = os.system(cmd)
+    time.sleep(1)
 print("Connectivity test passed.")
 
 app = Flask(__name__)
